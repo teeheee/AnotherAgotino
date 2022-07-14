@@ -24,7 +24,7 @@ long getRaSecs()
     {
       raSecs = DAY_SECONDS+raSecs;
     }
-    return raSecs%DAY_SECONDS;
+    return raSecs%long(DAY_SECONDS);
 }
 
 long getDecSecs()

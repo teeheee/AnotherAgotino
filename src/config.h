@@ -8,8 +8,6 @@
 #define STEP_PIN_X         5 // Step 
 #define DIR_PIN_Y          3 // Direction
 #define STEP_PIN_Y         6 // Step 
-#define SW_RX              13 // TMC2208/TMC2224 SoftwareSerial receive pin
-#define SW_TX              12 // TMC2208/TMC2224 SoftwareSerial transmit pin
 
 #define DRIVER_ADDRESS_X   0b00   // TMC2209 Driver address according to MS1 and MS2
 #define DRIVER_ADDRESS_Y   0b01   // TMC2209 Driver address according to MS1 and MS2

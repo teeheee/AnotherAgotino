@@ -38,6 +38,7 @@
 #include "stepper.h"
 #include "config.h"
 #include "motion.h"
+#include "coords.h"
 
 
 
@@ -72,8 +73,8 @@ int  in = 0;        // current char in serial input
  * (:GR# and :GD#) gets processed faster
  */
 void updateLx200Coords() {
-  long raSecs = getRaSecs();
-  long decSecs =  getDecSecs();
+  long raSecs = coord_get_ra_sec();
+  long decSecs =  coord_get_dec_sec();
   unsigned long pp = raSecs/3600;
   unsigned long mi = (raSecs/60)%60;
   unsigned long ss = raSecs%60;
@@ -190,13 +191,10 @@ void lx200(String s) { // all :.*# commands are passed here
 void setup() {  
   Serial.begin(9600);               // initialize hardware serial for debugging
 
-  Serial.print("FREQ_RA_1_HZ: ");
-  Serial.println(FREQ_RA_1_HZ);
-  Serial.print("FREQ_DEC_1_HZ: ");
-  Serial.println(FREQ_DEC_1_HZ);
+  delay(1000);
 
-  timer_init();
   stepper_init();
+  timer_init();
   stepper_set_dec_micro_stepping(MICROSTEPS_DEC);
   stepper_set_ra_micro_stepping(MICROSTEPS_RA);
 

@@ -3,6 +3,7 @@
 #include "tick_timer.h"
 #include "stepper.h"
 #include "config.h"
+#include "coords.h"
 
 unsigned long STEP_DELAY_SLEW = 1200;   // Slewing Pulse timing in micros (the higher the pulse, the slower the speed)
                                         // don't change this to too low values otherwise your scope may take off as an helicopter.
@@ -12,27 +13,10 @@ void slewRaDecBySteps(unsigned long raSteps, unsigned long decSteps);
 
 void syncRaDecBySecs(long raSecs, long decSecs)
 {
-    stepper_dec_set_steps(SEC_TO_MICROSTEPS_DEC(decSecs));
-    stepper_ra_set_steps(SEC_TO_MICROSTEPS_RA(raSecs));
+    coord_set_dec_sec(decSecs);
+    coord_set_ra_sec(raSecs);
 }
 
-long getRaSecs()
-{
-    long steps = stepper_ra_get_steps();
-    long raSecs = MICROSTEPS_TO_SEC_RA(steps)-time_get_secs();
-    while(raSecs < 0)
-    {
-      raSecs = DAY_SECONDS+raSecs;
-    }
-    return raSecs%long(DAY_SECONDS);
-}
-
-long getDecSecs()
-{
-    long steps = stepper_dec_get_steps();
-    long decSecs = MICROSTEPS_TO_SEC_DEC(steps);
-    return decSecs;
-}
 
 void slewRaDecBySecs(long raSecs, long decSecs){
   if(raSecs != 0)

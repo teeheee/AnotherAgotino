@@ -3,8 +3,6 @@
 
 void syncRaDecBySecs(long raSecs, long decSecs);
 void slewRaDecBySecs(long raSecs, long decSecs);
-long getRaSecs();
-long getDecSecs();
 
 void motion_halt();
 void motion_track();

@@ -158,15 +158,19 @@ void lx200(String s) { // all :.*# commands are passed here
       switch (s.charAt(2)) {
           case 'n':
             move_dec_ms(500);
+            Serial.print(1);
             break;
           case 's':
             move_dec_ms(-500);
+            Serial.print(1);
             break;
           case 'w':
             move_ra_ms(500);
+            Serial.print(1);
             break;
           case 'e':
             move_ra_ms(-500);
+            Serial.print(1);
             break;
         } // default is ignored;
     }

@@ -64,19 +64,16 @@ void motion_halt(){
 
 void move_dec_ms(long ms)
 {
-    long microsteps = MS_TO_MICROSTEPS_DEC(ms);
     if(ms > 0)
     {
-      timer_set_interval_dec(FREQ_DEC_1_HZ*GUIDE_SPEED_FREQ);
       stepper_dec_set_dir(1);
-      stepper_dec_move_steps(microsteps);
     }
     else
     {
-      timer_set_interval_dec(FREQ_DEC_1_HZ*GUIDE_SPEED_FREQ);
       stepper_dec_set_dir(-1);
-      stepper_dec_move_steps(-microsteps);
     }
+    timer_set_interval_dec(FREQ_DEC_1_HZ*GUIDE_SPEED_FREQ);
+    timer_reset_stepper_after_ms(labs(ms));
 }
 
 void move_ra_ms(long ms)
@@ -86,7 +83,6 @@ void move_ra_ms(long ms)
     {
       timer_set_interval_ra(FREQ_DEC_1_HZ+FREQ_DEC_1_HZ*GUIDE_SPEED_FREQ);
       stepper_ra_set_dir(1);
-      stepper_ra_move_steps(microsteps);
     }
     else
     {
@@ -95,19 +91,17 @@ void move_ra_ms(long ms)
       {
         timer_set_interval_ra(-freq);
         stepper_ra_set_dir(-1);
-        stepper_ra_move_steps(-microsteps);
       }
       else if(freq==0)
       {
-        timer_set_interval_ra(1000.0/ms);
-        stepper_ra_move_steps(1);
+        timer_stop_ra();
       }
       else
       {
         timer_set_interval_dec(freq);
         stepper_dec_set_dir(1);
-        stepper_dec_move_steps(-microsteps);
       }
     }
+    timer_reset_stepper_after_ms(labs(ms));
 }
 

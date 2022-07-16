@@ -4,6 +4,9 @@
 void timer_init();
 void timer_status();
 
+
+void timer_reset_stepper_after_ms(long ms);
+
 void timer_set_interval_ra(float freq);
 void timer_set_interval_dec(float freq);
 long time_get_secs();

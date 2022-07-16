@@ -22,47 +22,71 @@
 
 #define USE_TIMER_0     false
 #define USE_TIMER_1     true
-#define USE_TIMER_2     true
+#define USE_TIMER_2     false
 #define USE_TIMER_3     false
 
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include "megaAVR_TimerInterrupt.h"
-#include <SimpleTimer.h>
+
+
+// To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
+#include "megaAVR_ISR_Timer.h"
+
+#include <SimpleTimer.h>              // https://github.com/jfturcot/SimpleTimer
+
 #include "config.h"
 #include "stepper.h"
 
+ISR_Timer ISR_Timer_Object;
+
+int timer_handle_ra = 0;
+int timer_handle_dec = 0;
+int timer_handle_timeout = 0;
+
+void TimerHandler()
+{
+  ISR_Timer_Object.run();
+}
 
 float ra_freq = 0;
 float dec_freq = 0;
 
-int tick_compensation = 0; 
-
-long start_time = 0;
 
 #define PRINT_VAR(XX)  {Serial.print(#XX": ");Serial.println(XX);}
+
 void timer_status()
 {
-    PRINT_VAR(tick_compensation);
     PRINT_VAR(ra_freq);
     PRINT_VAR(dec_freq);
 }
 
-void timer_handle_ra()
+void timer_handle_reset_stepper()
+{
+    timer_set_interval_ra(FREQ_RA_1_HZ);
+    timer_stop_dec();
+    stepper_set_dec_micro_stepping(1);
+    stepper_dec_set_dir(1);
+    stepper_set_ra_micro_stepping(1);
+    stepper_ra_set_dir(1);
+    ISR_Timer_Object.disable(timer_handle_dec);
+}
+
+void timer_handle_ra_callback()
 {
   if(stepper_ra_step())
   {
     timer_set_interval_ra(FREQ_RA_1_HZ);
-    stepper_set_ra_micro_stepping(1);
+    stepper_set_ra_micro_stepping(MICROSTEPS_RA);
     stepper_ra_set_dir(1);
   }
 }
 
-void timer_handle_dec()
+void timer_handle_dec_callback()
 {
   if(stepper_dec_step())
   {
     timer_stop_dec();
-    stepper_set_dec_micro_stepping(1);
+    stepper_set_dec_micro_stepping(MICROSTEPS_DEC);
     stepper_dec_set_dir(1);
   }
 }
@@ -72,11 +96,11 @@ void timer_set_interval_ra(float freq)
   ra_freq = freq;
   if(freq==0)
   {
-    ITimer1.detachInterrupt();
+    ISR_Timer_Object.disable(timer_handle_ra);
   }
   else
   {
-    ITimer1.attachInterrupt(freq, timer_handle_ra);
+    timer_handle_ra = ISR_Timer_Object.setInterval(1000.0/freq, timer_handle_ra_callback);
   }
 }
 
@@ -85,11 +109,11 @@ void timer_set_interval_dec(float freq)
   dec_freq = freq;
   if(freq==0)
   {
-    ITimer2.detachInterrupt();
+    ISR_Timer_Object.disable(timer_handle_dec);
   }
   else
   {
-    ITimer2.attachInterrupt(freq, timer_handle_dec);
+    timer_handle_dec = ISR_Timer_Object.setInterval(1000.0/freq, timer_handle_dec_callback);
   }
 }
 
@@ -112,11 +136,10 @@ void timer_default()
 void timer_init()
 {
   ITimer1.init();
-  ITimer2.init();
-  start_time = millis();
+  ITimer1.attachInterruptInterval(1, TimerHandler);
 }
 
-long time_get_secs()
+void timer_reset_stepper_after_ms(long ms)
 {
-  return (millis()-start_time)/1000;
+  ISR_Timer_Object.setTimeout(ms, timer_handle_reset_stepper);
 }

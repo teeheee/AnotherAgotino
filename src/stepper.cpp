@@ -15,8 +15,6 @@ int dec_multiplier = 1;
 long ra_move_until = 0;
 long dec_move_until = 0;
 
-int current_ra_divider = 0;
-int current_dec_divider = 0;
 
 #define PRINT_VAR(XX)  {Serial.print(#XX": ");Serial.println(XX);}
 void stepper_status()
@@ -27,8 +25,6 @@ void stepper_status()
     PRINT_VAR(dec_multiplier);
     PRINT_VAR(ra_move_until);
     PRINT_VAR(dec_move_until);
-    PRINT_VAR(current_ra_divider);
-    PRINT_VAR(current_dec_divider);
 }
 
 void stepper_init()

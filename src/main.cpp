@@ -152,6 +152,7 @@ void lx200(String s) { // all :.*# commands are passed here
       long deltaRaSecs  = currRA-inRA;
       long deltaDecSecs = currDEC-inDEC;
       slewRaDecBySecs(-deltaRaSecs, -deltaDecSecs);
+      syncRaDecBySecs(inRA, inDEC);
       Serial.print(0); // slew is possible 
     } else {
       printLog("Mx");
@@ -187,6 +188,7 @@ void lx200(String s) { // all :.*# commands are passed here
   }else if (s.charAt(1) == 'Z') { // :Q# or :Qx# stop Dec Motor and set RA to Tracking
     stepper_status();
     timer_status();
+    coord_status();
     Serial.println("###");
   }
 }
@@ -219,6 +221,7 @@ void setup() {
  */
  
 void loop() {
+  process_stepper();
   // Check if message on serial input
   if (Serial.available() > 0) {
     input[in] = Serial.read(); 

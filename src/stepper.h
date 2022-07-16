@@ -3,6 +3,7 @@
 
 void stepper_init();
 void stepper_status();
+void process_stepper();
 
 int stepper_ra_step();
 int stepper_dec_step();

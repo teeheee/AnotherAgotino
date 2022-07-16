@@ -64,9 +64,9 @@ void timer_handle_reset_stepper()
 {
     timer_set_interval_ra(FREQ_RA_1_HZ);
     timer_stop_dec();
-    stepper_set_dec_micro_stepping(1);
+    stepper_set_dec_micro_stepping(MICROSTEPS_DEC);
     stepper_dec_set_dir(1);
-    stepper_set_ra_micro_stepping(1);
+    stepper_set_ra_micro_stepping(MICROSTEPS_RA);
     stepper_ra_set_dir(1);
     ISR_Timer_Object.disable(timer_handle_dec);
 }

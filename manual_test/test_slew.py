@@ -46,7 +46,7 @@ def verify_coordinates():
         print("error: ",str(c_recv.separation(c_model)) )
         print("recv", c_recv)
         print("model", c_model)
-        return
+        quit()
 
 def wait_until_match():
     old_diff = None
@@ -60,7 +60,7 @@ def wait_until_match():
             return 
         old_diff = diff
         status()
-        time.sleep(10)
+        time.sleep(1)
 
             
 
@@ -96,7 +96,7 @@ def slewto(ra_deg, dec_deg):
 init()
 verify_coordinates()
 status()
-slewto(45,45)
+slewto(10,80)
 wait_until_match()
 verify_coordinates()
 ser.close()  

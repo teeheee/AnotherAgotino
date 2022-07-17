@@ -55,6 +55,10 @@ void slewRaDecBySecs(long raSecs, long decSecs){
 void motion_track(){
   timer_set_interval_ra(FREQ_RA_1_HZ);
   timer_stop_dec();
+  stepper_dec_set_dir(1);
+  stepper_ra_set_dir(1);
+  stepper_set_ra_micro_stepping(MICROSTEPS_RA);
+  stepper_set_ra_micro_stepping(MICROSTEPS_DEC);
 }
 
 void motion_halt(){

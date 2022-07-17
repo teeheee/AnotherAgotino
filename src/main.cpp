@@ -69,6 +69,15 @@ const unsigned long _ver = 050722;
 char input[20];     // stores serial input
 int  in = 0;        // current char in serial input
 
+#define PRINT_VAR(XX)  {Serial.print(#XX": ");Serial.println(XX);}
+void main_status()
+{
+    PRINT_VAR(currRA);
+    PRINT_VAR(currDEC);
+    PRINT_VAR(inRA);
+    PRINT_VAR(inDEC);
+}
+
 /* Update lx200 RA&DEC string coords so polling 
  * (:GR# and :GD#) gets processed faster
  */
@@ -189,6 +198,7 @@ void lx200(String s) { // all :.*# commands are passed here
     stepper_status();
     timer_status();
     coord_status();
+    main_status();
     Serial.println("###");
   }
 }

@@ -68,7 +68,7 @@ def wait_until_match():
 def slewto(ra_deg, dec_deg):
     global c_model
     c_model = SkyCoord(ra=ra_deg*u.degree, dec=dec_deg*u.degree, frame='icrs')
-    hh = int(ra_deg)
+    hh = int(ra_deg*24/360)
     mm = int((ra_deg-hh)*60)
     ss = int((ra_deg-hh-mm/60)*3600)
     ra_str = b":Sr%02d:%02d:%02d#"%(

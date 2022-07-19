@@ -39,9 +39,9 @@
 
 ISR_Timer ISR_Timer_Object;
 
-int timer_handle_ra = 0;
-int timer_handle_dec = 0;
-int timer_handle_timeout = 0;
+int timer_handle_ra = -1;
+int timer_handle_dec = -1;
+int timer_handle_timeout = -1;
 
 void TimerHandler()
 {
@@ -68,7 +68,7 @@ void timer_handle_reset_stepper()
     stepper_dec_set_dir(1);
     stepper_set_ra_micro_stepping(MICROSTEPS_RA);
     stepper_ra_set_dir(1);
-    ISR_Timer_Object.disable(timer_handle_dec);
+    timer_set_interval_dec(0);
 }
 
 void timer_handle_ra_callback()
@@ -96,7 +96,12 @@ void timer_set_interval_ra(float freq)
   ra_freq = freq;
   if(freq==0)
   {
-    ISR_Timer_Object.disable(timer_handle_ra);
+    ISR_Timer_Object.deleteTimer(timer_handle_ra);
+    timer_handle_ra = -1;
+  }
+  else if(timer_handle_ra >= 0)
+  {
+    ISR_Timer_Object.changeInterval(timer_handle_ra, 1000.0/freq);
   }
   else
   {
@@ -109,7 +114,12 @@ void timer_set_interval_dec(float freq)
   dec_freq = freq;
   if(freq==0)
   {
-    ISR_Timer_Object.disable(timer_handle_dec);
+    ISR_Timer_Object.deleteTimer(timer_handle_dec);
+    timer_handle_dec = -1;
+  }
+  else if(timer_handle_dec >= 0)
+  {
+    ISR_Timer_Object.changeInterval(timer_handle_dec, 1000.0/freq);
   }
   else
   {
@@ -141,5 +151,13 @@ void timer_init()
 
 void timer_reset_stepper_after_ms(long ms)
 {
-  ISR_Timer_Object.setTimeout(ms, timer_handle_reset_stepper);
+  if(timer_handle_timeout == -1)
+  {
+    timer_handle_timeout = ISR_Timer_Object.setTimeout(ms, timer_handle_reset_stepper);
+  }
+  else
+  {
+    ISR_Timer_Object.deleteTimer(timer_handle_timeout);
+    ISR_Timer_Object.setTimeout(ms, timer_handle_reset_stepper);
+  }
 }

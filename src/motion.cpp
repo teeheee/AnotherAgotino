@@ -93,7 +93,7 @@ void move_ra_ms(long ms)
       float freq = FREQ_DEC_1_HZ - FREQ_DEC_1_HZ*GUIDE_SPEED_FREQ;
       if(freq < 0)
       {
-        timer_set_interval_ra(-freq);
+        timer_set_interval_ra(fabs(freq));
         stepper_ra_set_dir(-1);
       }
       else if(freq==0)
@@ -102,8 +102,8 @@ void move_ra_ms(long ms)
       }
       else
       {
-        timer_set_interval_dec(freq);
-        stepper_dec_set_dir(1);
+        timer_set_interval_ra(freq);
+        stepper_ra_set_dir(1);
       }
     }
     timer_reset_stepper_after_ms(labs(ms));

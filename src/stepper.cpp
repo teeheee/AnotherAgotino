@@ -3,8 +3,8 @@
 #include <TMCStepper.h>         // TMCstepper - https://github.com/teemuatlut/TMCStepper
 #include <Arduino.h>  
 
-TMC2209Stepper TMCdriverx(&Serial1, R_SENSE, DRIVER_ADDRESS_X);   // Create TMC driver
-TMC2209Stepper TMCdrivery(&Serial1, R_SENSE, DRIVER_ADDRESS_Y);   // Create TMC driver
+TMC2209Stepper TMC_driver_ra(&Serial1, R_SENSE, DRIVER_ADDRESS_X);   // Create TMC driver
+TMC2209Stepper TMC_driver_dec(&Serial1, R_SENSE, DRIVER_ADDRESS_Y);   // Create TMC driver
 
 int ra_direction = 1;
 int dec_direction = 1;
@@ -35,51 +35,52 @@ void stepper_init()
   // Set pinmodes
   Serial1.begin(9600); 
   pinMode(EN_PIN, OUTPUT);           
-  pinMode(STEP_PIN_X, OUTPUT);
-  pinMode(DIR_PIN_X, OUTPUT);
-  pinMode(STEP_PIN_Y, OUTPUT);
-  pinMode(DIR_PIN_Y, OUTPUT);
+  pinMode(STEP_PIN_RA, OUTPUT);
+  pinMode(DIR_PIN_RA, OUTPUT);
+  pinMode(STEP_PIN_DEC, OUTPUT);
+  pinMode(DIR_PIN_DEC, OUTPUT);
   // Enable TMC2209 board
   digitalWrite(EN_PIN, LOW);   
-  digitalWrite(STEP_PIN_X, LOW);
-  digitalWrite(STEP_PIN_Y, LOW);
-  digitalWrite(DIR_PIN_X, LOW);
-  digitalWrite(DIR_PIN_Y, LOW);
+  digitalWrite(STEP_PIN_RA, LOW);
+  digitalWrite(STEP_PIN_DEC, LOW);
+  digitalWrite(DIR_PIN_RA, LOW);
+  digitalWrite(DIR_PIN_DEC, LOW);
  
    delay(100);
 
-  TMCdriverx.begin();                                                                                                                                                                                                                                                                                                                          // UART: Init SW UART (if selected) with default 115200 baudrate
-  TMCdriverx.toff(5);                 // Enables driver in software
-  TMCdriverx.rms_current(800);        // Set motor RMS current
-  TMCdriverx.en_spreadCycle(false);
-  TMCdriverx.pwm_autoscale(true);     // Needed for stealthChop
-  TMCdriverx.TPWMTHRS(7);     // Needed for stealthChop
-  TMCdriverx.microsteps(MICROSTEPS_RA);  
+  TMC_driver_ra.begin();                                                                                                                                                                                                                                                                                                                          // UART: Init SW UART (if selected) with default 115200 baudrate
+  TMC_driver_ra.toff(5);                 // Enables driver in software
+  TMC_driver_ra.rms_current(800);        // Set motor RMS current
+  TMC_driver_ra.en_spreadCycle(false);
+  TMC_driver_ra.pwm_autoscale(true);     // Needed for stealthChop
+  TMC_driver_ra.TPWMTHRS(7);     // Needed for stealthChop
+  TMC_driver_ra.microsteps(MICROSTEPS_RA);  
 
 
-  TMCdrivery.begin();                                                                                                                                                                                                                                                                                                                            // UART: Init SW UART (if selected) with default 115200 baudrate
-  TMCdrivery.toff(5);                 // Enables driver in software
-  TMCdrivery.rms_current(800);        // Set motor RMS current
-  TMCdrivery.en_spreadCycle(false);
-  TMCdrivery.TPWMTHRS(7);     // Needed for stealthChop
-  TMCdrivery.microsteps(MICROSTEPS_DEC);  
+  TMC_driver_dec.begin();                                                                                                                                                                                                                                                                                                                            // UART: Init SW UART (if selected) with default 115200 baudrate
+  TMC_driver_dec.toff(5);                 // Enables driver in software
+  TMC_driver_dec.rms_current(800);        // Set motor RMS current
+  TMC_driver_dec.en_spreadCycle(false);
+  TMC_driver_dec.TPWMTHRS(7);     // Needed for stealthChop
+  TMC_driver_dec.microsteps(MICROSTEPS_DEC);  
 
   
   stepper_ra_set_dir(1);
   stepper_dec_set_dir(1);
   digitalWrite(0, LOW);
   digitalWrite(1, LOW);
+
 }
 
 void process_stepper()
 {
     if(update_microsteps_ra)
     {
-        TMCdriverx.microsteps(ra_microsteps);          // Set microsteps
+        TMC_driver_ra.microsteps(ra_microsteps);          // Set microsteps
     }
     if(update_microsteps_dec)
     {
-        TMCdrivery.microsteps(dec_microsteps);          // Set microsteps
+        TMC_driver_dec.microsteps(dec_microsteps);          // Set microsteps
     }
     digitalWrite(0, LOW);
     digitalWrite(1, LOW);
@@ -87,7 +88,7 @@ void process_stepper()
 
 int stepper_ra_step()
 {
-    digitalWrite(STEP_PIN_X, HIGH);
+    digitalWrite(STEP_PIN_RA, HIGH);
     int ret = 0;
     if(ra_move_until)
     {
@@ -99,13 +100,13 @@ int stepper_ra_step()
         }
     }
     delayMicroseconds(5);
-    digitalWrite(STEP_PIN_X, LOW);
+    digitalWrite(STEP_PIN_RA, LOW);
     return ret;
 }
 
 int stepper_dec_step()
 {
-    digitalWrite(STEP_PIN_Y, HIGH);
+    digitalWrite(STEP_PIN_DEC, HIGH);
     int ret = 0;
     if(dec_move_until)
     {
@@ -117,7 +118,7 @@ int stepper_dec_step()
         }
     }
     delayMicroseconds(5);
-    digitalWrite(STEP_PIN_Y, LOW);
+    digitalWrite(STEP_PIN_DEC, LOW);
     return ret;
 }
 
@@ -135,20 +136,20 @@ long stepper_dec_get_remaining_secs()
 void stepper_ra_set_dir(int direction)
 {
     ra_direction = direction;
-    if(direction == 1)
-        digitalWrite(HIGH, DIR_PIN_Y);
-    if(direction == -1)
-        digitalWrite(LOW, DIR_PIN_Y);
+    if(direction > 0)
+        digitalWrite(DIR_PIN_RA, HIGH);
+    else
+        digitalWrite(DIR_PIN_RA, LOW);
 }
 
 
 void stepper_dec_set_dir(int direction)
 {
     dec_direction = direction;
-    if(direction == 1)
-        digitalWrite(HIGH, DIR_PIN_X);
-    if(direction == -1)
-        digitalWrite(LOW, DIR_PIN_X);
+    if(direction > 0)
+        digitalWrite(DIR_PIN_DEC, HIGH);
+    else
+        digitalWrite(DIR_PIN_DEC, LOW);
 }
 
 void stepper_set_ra_micro_stepping(int microsteps)

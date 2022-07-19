@@ -165,18 +165,20 @@ void lx200(String s) { // all :.*# commands are passed here
       Serial.print(0); // slew is possible 
     } else {
       printLog("Mx");
+      int ms = 500;
+      ms = s.substring(3,7).toInt();
       switch (s.charAt(2)) {
           case 'n':
-            move_dec_ms(500);
+            move_ra_ms(ms);
             break;
           case 's':
-            move_dec_ms(-500);
+            move_ra_ms(-ms);
             break;
           case 'w':
-            move_ra_ms(500);
+            move_dec_ms(ms);
             break;
           case 'e':
-            move_ra_ms(-500);
+            move_dec_ms(-ms);
             break;
         } // default is ignored;
     }

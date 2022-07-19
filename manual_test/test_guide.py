@@ -27,10 +27,13 @@ def status():
     print(x.decode("utf-8"))
 
 init()
-for i in [b"n",b"w",b"s",b"e"]:
-    print("============MOVE %s============="%i)
-    write_and_read(ser, b":M"+i+b"#", until=b"1")
-    status()
-    time.sleep(4)
-    status()
+for i in range(10):
+    for i in [b"n0500",b"s0500",b"w0500",b"e0500"]:
+        print("============MOVE %s============="%i)
+        write_and_read(ser, b":M"+i+b"#", until=None)
+        status()
+        status()
+        status()
+        status()
+        time.sleep(4)
 ser.close()  

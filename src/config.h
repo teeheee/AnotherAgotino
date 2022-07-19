@@ -4,10 +4,10 @@
 #include <limits.h>
 
 #define EN_PIN             8 // Enable
-#define DIR_PIN_X          2 // Direction
-#define STEP_PIN_X         5 // Step 
-#define DIR_PIN_Y          3 // Direction
-#define STEP_PIN_Y         6 // Step 
+#define DIR_PIN_RA          2 // Direction
+#define STEP_PIN_RA         5 // Step 
+#define DIR_PIN_DEC          3 // Direction
+#define STEP_PIN_DEC         6 // Step 
 
 #define DRIVER_ADDRESS_X   0b00   // TMC2209 Driver address according to MS1 and MS2
 #define DRIVER_ADDRESS_Y   0b01   // TMC2209 Driver address according to MS1 and MS2
@@ -48,7 +48,7 @@
 #define FREQ_DEC_1_HZ ((1000.0*MICROSTEPS_PER_DEGREE_DEC*360.0)/(MS_PER_DAY_SIDERAL))
 
 #define GUIDE_SPEED_FREQ 2
-#define SLEW_SPEED_FREQ  10
+#define SLEW_SPEED_FREQ  20
 
 #define NORTH_DEC_SEC     324000L // 90°
 

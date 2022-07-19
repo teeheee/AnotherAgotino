@@ -169,10 +169,10 @@ void lx200(String s) { // all :.*# commands are passed here
       ms = s.substring(3,7).toInt();
       switch (s.charAt(2)) {
           case 'n':
-            move_ra_ms(ms);
+            move_ra_ms(-ms);
             break;
           case 's':
-            move_ra_ms(-ms);
+            move_ra_ms(ms);
             break;
           case 'w':
             move_dec_ms(ms);

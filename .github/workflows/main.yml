@@ -29,3 +29,8 @@ jobs:
         pip install --upgrade platformio
     - name: Build
       run: pio run
+    - name: publish build output
+            uses: actions/upload-artifact@v3
+            with:
+              name: firmware_nano_every
+              path: .pio\build\nano_every\firmware.bin

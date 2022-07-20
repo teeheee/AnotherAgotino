@@ -33,4 +33,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: firmware_nano_every
-        path: .pio\build\nano_every\firmware.elf
+        path: .pio/build/nano_every/firmware.elf

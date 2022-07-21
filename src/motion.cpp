@@ -82,7 +82,6 @@ void move_dec_ms(long ms)
 
 void move_ra_ms(long ms)
 {
-    long microsteps = MS_TO_MICROSTEPS_RA(ms);
     if(ms > 0)
     {
       timer_set_interval_ra(FREQ_DEC_1_HZ+FREQ_DEC_1_HZ*GUIDE_SPEED_FREQ);

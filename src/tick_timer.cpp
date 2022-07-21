@@ -58,6 +58,9 @@ void timer_status()
 {
     PRINT_VAR(ra_freq);
     PRINT_VAR(dec_freq);
+    PRINT_VAR(timer_handle_ra);
+    PRINT_VAR(timer_handle_dec);
+    PRINT_VAR(timer_handle_timeout);
 }
 
 void timer_handle_reset_stepper()
@@ -69,6 +72,8 @@ void timer_handle_reset_stepper()
     stepper_set_ra_micro_stepping(MICROSTEPS_RA);
     stepper_ra_set_dir(1);
     timer_set_interval_dec(0);
+    ISR_Timer_Object.deleteTimer(timer_handle_timeout);
+    timer_handle_timeout = -1;
 }
 
 void timer_handle_ra_callback()
@@ -153,11 +158,11 @@ void timer_reset_stepper_after_ms(long ms)
 {
   if(timer_handle_timeout == -1)
   {
-    timer_handle_timeout = ISR_Timer_Object.setTimeout(ms, timer_handle_reset_stepper);
+    timer_handle_timeout = ISR_Timer_Object.setInterval(ms, timer_handle_reset_stepper);
   }
   else
   {
     ISR_Timer_Object.deleteTimer(timer_handle_timeout);
-    ISR_Timer_Object.setTimeout(ms, timer_handle_reset_stepper);
+    timer_handle_timeout = ISR_Timer_Object.setInterval(ms, timer_handle_reset_stepper);
   }
 }

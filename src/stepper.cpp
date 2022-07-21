@@ -70,7 +70,6 @@ void stepper_init()
   Serial1.end();
   digitalWrite(0, LOW);
   digitalWrite(1, LOW);
-
 }
 
 void process_stepper()

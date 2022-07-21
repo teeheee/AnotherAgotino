@@ -48,7 +48,7 @@
 #define FREQ_DEC_1_HZ ((1000.0*MICROSTEPS_PER_DEGREE_DEC*360.0)/(MS_PER_DAY_SIDERAL))
 
 #define GUIDE_SPEED_FREQ 20 //133 //see https://www.indilib.org/about/ekos/guide-module.html#h4-guiding for proportional gain
-#define SLEW_SPEED_FREQ  20
+#define SLEW_SPEED_FREQ  2
 
 #define NORTH_DEC_SEC     324000L // 90°
 

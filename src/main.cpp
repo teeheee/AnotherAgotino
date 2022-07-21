@@ -164,10 +164,10 @@ void lx200(String s) { // all :.*# commands are passed here
       syncRaDecBySecs(inRA, inDEC);
       Serial.print(0); // slew is possible 
     } else {
-      printLog("Mx");
+      printLog("Mg");
       int ms = 500;
-      ms = s.substring(3,7).toInt();
-      switch (s.charAt(2)) {
+      ms = s.substring(4,8).toInt();
+      switch (s.charAt(3)) {
           case 'n':
             move_ra_ms(-ms);
             break;

@@ -67,6 +67,7 @@ void stepper_init()
   
   stepper_ra_set_dir(1);
   stepper_dec_set_dir(1);
+  Serial1.end();
   digitalWrite(0, LOW);
   digitalWrite(1, LOW);
 
@@ -74,16 +75,21 @@ void stepper_init()
 
 void process_stepper()
 {
-    if(update_microsteps_ra)
+    if(update_microsteps_ra || update_microsteps_dec)
     {
-        TMC_driver_ra.microsteps(ra_microsteps);          // Set microsteps
+        Serial1.begin(9600); 
+        if(update_microsteps_ra)
+        {
+            TMC_driver_ra.microsteps(ra_microsteps);          // Set microsteps
+        }
+        if(update_microsteps_dec)
+        {
+            TMC_driver_dec.microsteps(dec_microsteps);          // Set microsteps
+        }
+        Serial1.end();
+        digitalWrite(0, LOW);
+        digitalWrite(1, LOW);
     }
-    if(update_microsteps_dec)
-    {
-        TMC_driver_dec.microsteps(dec_microsteps);          // Set microsteps
-    }
-    digitalWrite(0, LOW);
-    digitalWrite(1, LOW);
 }
 
 int stepper_ra_step()

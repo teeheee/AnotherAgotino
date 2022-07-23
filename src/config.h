@@ -16,8 +16,8 @@
 #define MICROSTEPS_RA  32 // RA  Driver Microsteps
 #define MICROSTEPS_DEC 32 // DEC Driver Microsteps
 
-#define MICROSTEPS_RA_FAST  1 // RA  Driver Microsteps
-#define MICROSTEPS_DEC_FAST 1 // DEC Driver Microsteps
+#define MICROSTEPS_RA_FAST  32 // RA  Driver Microsteps
+#define MICROSTEPS_DEC_FAST 32 // DEC Driver Microsteps
 
 #define SERIAL_SPEED    9600          // serial interface baud. Make sure your computer/phone matches this
 
@@ -48,7 +48,7 @@
 #define FREQ_DEC_1_HZ ((1000.0*MICROSTEPS_PER_DEGREE_DEC*360.0)/(MS_PER_DAY_SIDERAL))
 
 #define GUIDE_SPEED_FREQ 20 //133 //see https://www.indilib.org/about/ekos/guide-module.html#h4-guiding for proportional gain
-#define SLEW_SPEED_FREQ  2
+#define SLEW_SPEED_FREQ  20
 
 #define NORTH_DEC_SEC     324000L // 90°
 

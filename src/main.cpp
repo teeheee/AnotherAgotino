@@ -162,6 +162,8 @@ void lx200(String s) { // all :.*# commands are passed here
       long deltaDecSecs = currDEC-inDEC;
       slewRaDecBySecs(-deltaRaSecs, -deltaDecSecs);
       syncRaDecBySecs(inRA, inDEC);
+      currRA = inRA;
+      currDEC = inDEC;
       Serial.print(0); // slew is possible 
     } else {
       printLog("Mg");

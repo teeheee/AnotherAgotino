@@ -8,6 +8,7 @@
 #define STEP_PIN_RA         5 // Step 
 #define DIR_PIN_DEC          3 // Direction
 #define STEP_PIN_DEC         6 // Step 
+#define SIDE_OF_PIER_PIN    12 
 
 #define DRIVER_ADDRESS_X   0b00   // TMC2209 Driver address according to MS1 and MS2
 #define DRIVER_ADDRESS_Y   0b01   // TMC2209 Driver address according to MS1 and MS2
@@ -16,8 +17,8 @@
 #define MICROSTEPS_RA  32 // RA  Driver Microsteps
 #define MICROSTEPS_DEC 32 // DEC Driver Microsteps
 
-#define MICROSTEPS_RA_FAST  32 // RA  Driver Microsteps
-#define MICROSTEPS_DEC_FAST 32 // DEC Driver Microsteps
+#define MICROSTEPS_RA_FAST  8 // RA  Driver Microsteps
+#define MICROSTEPS_DEC_FAST 8 // DEC Driver Microsteps
 
 #define SERIAL_SPEED    9600          // serial interface baud. Make sure your computer/phone matches this
 

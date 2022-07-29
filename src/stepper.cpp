@@ -34,6 +34,7 @@ void stepper_init()
 {
   // Set pinmodes
   Serial1.begin(9600); 
+  pinMode(SIDE_OF_PIER_PIN, INPUT_PULLUP);
   pinMode(EN_PIN, OUTPUT);           
   pinMode(STEP_PIN_RA, OUTPUT);
   pinMode(DIR_PIN_RA, OUTPUT);
@@ -50,7 +51,7 @@ void stepper_init()
 
   TMC_driver_ra.begin();                                                                                                                                                                                                                                                                                                                          // UART: Init SW UART (if selected) with default 115200 baudrate
   TMC_driver_ra.toff(5);                 // Enables driver in software
-  TMC_driver_ra.rms_current(800);        // Set motor RMS current
+  TMC_driver_ra.rms_current(1000);        // Set motor RMS current
   TMC_driver_ra.en_spreadCycle(false);
   TMC_driver_ra.pwm_autoscale(true);     // Needed for stealthChop
   TMC_driver_ra.TPWMTHRS(7);     // Needed for stealthChop
@@ -59,7 +60,7 @@ void stepper_init()
 
   TMC_driver_dec.begin();                                                                                                                                                                                                                                                                                                                            // UART: Init SW UART (if selected) with default 115200 baudrate
   TMC_driver_dec.toff(5);                 // Enables driver in software
-  TMC_driver_dec.rms_current(800);        // Set motor RMS current
+  TMC_driver_dec.rms_current(1000);        // Set motor RMS current
   TMC_driver_dec.en_spreadCycle(false);
   TMC_driver_dec.TPWMTHRS(7);     // Needed for stealthChop
   TMC_driver_dec.microsteps(MICROSTEPS_DEC);  
@@ -80,10 +81,12 @@ void process_stepper()
         if(update_microsteps_ra)
         {
             TMC_driver_ra.microsteps(ra_microsteps);          // Set microsteps
+            update_microsteps_ra = 0;
         }
         if(update_microsteps_dec)
         {
             TMC_driver_dec.microsteps(dec_microsteps);          // Set microsteps
+            update_microsteps_dec = 0;
         }
         Serial1.end();
         digitalWrite(0, LOW);
@@ -151,6 +154,8 @@ void stepper_ra_set_dir(int direction)
 void stepper_dec_set_dir(int direction)
 {
     dec_direction = direction;
+    if(digitalRead(SIDE_OF_PIER_PIN))
+        direction *= -1;
     if(direction > 0)
         digitalWrite(DIR_PIN_DEC, HIGH);
     else
@@ -161,7 +166,7 @@ void stepper_set_ra_micro_stepping(int microsteps)
 {
   if(ra_microsteps==microsteps)
     return;
-  update_microsteps_dec = 1; 
+  update_microsteps_ra = 1; 
   ra_microsteps = microsteps;
 }
 
@@ -169,7 +174,7 @@ void stepper_set_dec_micro_stepping(int microsteps)
 {
   if(dec_microsteps==microsteps)
     return;
-  update_microsteps_ra = 1; 
+  update_microsteps_dec = 1; 
   dec_microsteps = microsteps;
 }
 

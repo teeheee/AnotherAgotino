@@ -75,7 +75,7 @@ void stepper_init()
 
 void process_stepper()
 {
-    if(update_microsteps_ra || update_microsteps_dec)
+    if(update_microsteps_ra && update_microsteps_dec) //TODO should be or but driver could not have different microstep at the same time
     {
         Serial1.begin(9600); 
         if(update_microsteps_ra)

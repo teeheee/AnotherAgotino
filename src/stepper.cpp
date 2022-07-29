@@ -51,7 +51,7 @@ void stepper_init()
 
   TMC_driver_ra.begin();                                                                                                                                                                                                                                                                                                                          // UART: Init SW UART (if selected) with default 115200 baudrate
   TMC_driver_ra.toff(5);                 // Enables driver in software
-  TMC_driver_ra.rms_current(1000);        // Set motor RMS current
+  TMC_driver_ra.rms_current(800);        // Set motor RMS current
   TMC_driver_ra.en_spreadCycle(false);
   TMC_driver_ra.pwm_autoscale(true);     // Needed for stealthChop
   TMC_driver_ra.TPWMTHRS(7);     // Needed for stealthChop
@@ -60,7 +60,7 @@ void stepper_init()
 
   TMC_driver_dec.begin();                                                                                                                                                                                                                                                                                                                            // UART: Init SW UART (if selected) with default 115200 baudrate
   TMC_driver_dec.toff(5);                 // Enables driver in software
-  TMC_driver_dec.rms_current(1000);        // Set motor RMS current
+  TMC_driver_dec.rms_current(800);        // Set motor RMS current
   TMC_driver_dec.en_spreadCycle(false);
   TMC_driver_dec.TPWMTHRS(7);     // Needed for stealthChop
   TMC_driver_dec.microsteps(MICROSTEPS_DEC);  

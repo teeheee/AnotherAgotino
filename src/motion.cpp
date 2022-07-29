@@ -25,12 +25,12 @@ void slewRaDecBySecs(long raSecs, long decSecs){
     timer_set_interval_ra(FREQ_RA_1_HZ*SLEW_SPEED_FREQ);
     if(raSecs > 0)
     {
-      stepper_ra_set_dir(1);
+      stepper_ra_set_dir(-1);
     }
     else
     {
       raSecs = -raSecs;
-      stepper_ra_set_dir(-1);
+      stepper_ra_set_dir(1);
     }
     stepper_ra_move_steps(SEC_TO_MICROSTEPS_RA(raSecs));
   }

@@ -145,9 +145,9 @@ void stepper_ra_set_dir(int direction)
 {
     ra_direction = direction;
     if(direction > 0)
-        digitalWrite(DIR_PIN_RA, HIGH);
-    else
         digitalWrite(DIR_PIN_RA, LOW);
+    else
+        digitalWrite(DIR_PIN_RA, HIGH);
 }
 
 

@@ -68,9 +68,10 @@ def wait_until_match():
 def slewto(ra_deg, dec_deg):
     global c_model
     c_model = SkyCoord(ra=ra_deg*u.degree, dec=dec_deg*u.degree, frame='icrs')
-    hh = int(ra_deg*24/360)
-    mm = int((ra_deg-hh)*60)
-    ss = int((ra_deg-hh-mm/60)*3600)
+    hh_acc = ra_deg*24/360
+    hh = int(hh_acc)
+    mm = int((hh_acc-hh)*60)
+    ss = int((hh_acc-hh-mm/60)*3600)
     ra_str = b":Sr%02d:%02d:%02d#"%(
         hh,
         mm,
@@ -96,7 +97,15 @@ def slewto(ra_deg, dec_deg):
 init()
 verify_coordinates()
 status()
-slewto(10,80)
+slewto(1,90)
+status()
 wait_until_match()
 verify_coordinates()
-ser.close()  
+slewto(359,90)
+status()
+wait_until_match()
+verify_coordinates()
+ser.close() 
+ser = serial.Serial('COM9',9600)  # open serial port
+init() 
+ser.close() 

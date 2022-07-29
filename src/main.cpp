@@ -40,8 +40,6 @@
 #include "motion.h"
 #include "coords.h"
 
-
-
 /*
  * It is safe to keep the below untouched
  * 
@@ -159,6 +157,14 @@ void lx200(String s) { // all :.*# commands are passed here
       // assumes Sr and Sd have been processed hence
       // inRA and inDEC have been set, now it's time to move
       long deltaRaSecs  = currRA-inRA;
+      if(deltaRaSecs > DAY_SECONDS/2)
+      {
+        deltaRaSecs = -(DAY_SECONDS - labs(deltaRaSecs));
+      }
+      else if(deltaRaSecs < -DAY_SECONDS/2)
+      {
+        deltaRaSecs = (DAY_SECONDS - labs(deltaRaSecs));
+      }
       long deltaDecSecs = currDEC-inDEC;
       slewRaDecBySecs(-deltaRaSecs, -deltaDecSecs);
       syncRaDecBySecs(inRA, inDEC);

@@ -61,6 +61,9 @@ String lx200DEC = "+90*00:00#";
 
 String _aGotino = "AGT";
 
+String currentDate = "01/01/2022";
+String currentLocation = "Ulm";
+
 const unsigned long _ver = 050722;
 
 // Serial Input
@@ -129,6 +132,20 @@ void lx200(String s) { // all :.*# commands are passed here
        Serial.print(_ver);  
     }
     Serial.print('#');
+  } else if (s.substring(1,3).equals("GC")) { 
+    Serial.print(currentDate);  
+    Serial.print('#');
+  } else if (s.substring(1,3).equals("GM")) { 
+    Serial.print(currentLocation);  
+    Serial.print('#');
+  } else if (s.substring(1,3).equals("GT")) {  
+    Serial.print('60.0#');
+  } else if (s.substring(1,3).equals("SC")) { 
+    int end = s.indexOf('#');
+    currentDate = s.substring(3,end);
+  } else if (s.substring(1,3).equals("SM")) { 
+    int end = s.indexOf('#');
+    currentLocation = s.substring(3,end);
   } else if (s.substring(1,3).equals("Sr")) { // :SrHH:MM:SS# or :SrHH:MM.T# // no blanks after :Sr as per Meade specs
     printLog("Sr");
     // this is INITAL step for setting position (RA)
@@ -171,7 +188,7 @@ void lx200(String s) { // all :.*# commands are passed here
       currRA = inRA;
       currDEC = inDEC;
       Serial.print(0); // slew is possible 
-    } else {
+    } else if (s.charAt(2) == 'g' ) {
       printLog("Mg");
       int ms = 500;
       ms = s.substring(4,8).toInt();
@@ -187,6 +204,21 @@ void lx200(String s) { // all :.*# commands are passed here
             break;
           case 'e':
             move_dec_ms(-ms);
+            break;
+        } // default is ignored;
+    }else  {
+      switch (s.charAt(2)) {
+          case 'n':
+            start_move_ra(-1);
+            break;
+          case 's':
+            start_move_ra(1);
+            break;
+          case 'w':
+            start_move_dec(1);
+            break;
+          case 'e':
+            start_move_dec(-1);
             break;
         } // default is ignored;
     }

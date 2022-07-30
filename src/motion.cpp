@@ -108,3 +108,14 @@ void move_ra_ms(long ms)
     timer_reset_stepper_after_ms(labs(ms));
 }
 
+void start_move_ra(int dir)
+{
+    timer_set_interval_ra(FREQ_DEC_1_HZ*SLEW_SPEED_FREQ);
+    stepper_ra_set_dir(dir);
+}
+
+void start_move_dec(int dir)
+{
+    timer_set_interval_dec(FREQ_DEC_1_HZ*SLEW_SPEED_FREQ);
+    stepper_ra_set_dir(dir);
+}

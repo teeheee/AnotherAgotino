@@ -64,6 +64,7 @@ String _aGotino = "AGT";
 String currentDate = "01/01/2022";
 String currentTime = "01:00:00";
 String currentLocation = "Ulm";
+String currentUTCOffset = "-02";
 
 const unsigned long _ver = 050722;
 
@@ -149,13 +150,20 @@ void lx200(String s) { // all :.*# commands are passed here
     Serial.print(currentTime);  
     Serial.print('#');
   } else if (s.substring(1,3).equals("GL")) {  
-    Serial.print('+02#');
+    Serial.print(currentUTCOffset);
+    Serial.print('#');
   } else if (s.substring(1,3).equals("SC")) { 
     int end = s.indexOf('#');
     currentDate = s.substring(3,end);
+    Serial.print(1);
+  } else if (s.substring(1,3).equals("SG")) { 
+    int end = s.indexOf('#');
+    currentUTCOffset = s.substring(3,end);
+    Serial.print(1);
   } else if (s.substring(1,3).equals("SM")) { 
     int end = s.indexOf('#');
     currentLocation = s.substring(3,end);
+    Serial.print(1);
   } else if (s.substring(1,3).equals("Sr")) { // :SrHH:MM:SS# or :SrHH:MM.T# // no blanks after :Sr as per Meade specs
     printLog("Sr");
     // this is INITAL step for setting position (RA)

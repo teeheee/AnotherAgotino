@@ -33,11 +33,11 @@ Many thanks to mappite for the aGotino Project
 * :GM# -> Ulm# //Get Site 1 Name
 * :SMstring# 
 * :GT# -> TT.T# //Get Tracking Rate 60Hz=Sideral Rate
-
-# Command TODO ?
 * :Gt# -> sDD*MM# //Get Current Site Latitdue
 * :GG# -> sHH# //Get UTC offset time
 * :GL# -> HH:MM:SS# //Get Local Time in 24 hour format 
+
+# Command TODO ?
 * :SG -02#:
 * :Sg-10:00#
 * :D#

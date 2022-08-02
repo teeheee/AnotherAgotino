@@ -14,8 +14,8 @@
 #define DRIVER_ADDRESS_Y   0b01   // TMC2209 Driver address according to MS1 and MS2
 #define R_SENSE 0.11f           // SilentStepStick series use 0.11 ...and so does my fysetc TMC2209 (?)
 
-#define MICROSTEPS_RA  32 // RA  Driver Microsteps
-#define MICROSTEPS_DEC 32 // DEC Driver Microsteps
+#define MICROSTEPS_RA  64 // RA  Driver Microsteps
+#define MICROSTEPS_DEC 64 // DEC Driver Microsteps
 
 #define MICROSTEPS_RA_FAST  8 // RA  Driver Microsteps
 #define MICROSTEPS_DEC_FAST 8 // DEC Driver Microsteps
@@ -48,7 +48,7 @@
 #define FREQ_RA_1_HZ ((1000.0*MICROSTEPS_PER_DEGREE_RA*360.0)/(MS_PER_DAY_SIDERAL))
 #define FREQ_DEC_1_HZ ((1000.0*MICROSTEPS_PER_DEGREE_DEC*360.0)/(MS_PER_DAY_SIDERAL))
 
-#define GUIDE_SPEED_FREQ 1 //133 //see https://www.indilib.org/about/ekos/guide-module.html#h4-guiding for proportional gain
+#define GUIDE_SPEED_FREQ 4 //133 //see https://www.indilib.org/about/ekos/guide-module.html#h4-guiding for proportional gain
 #define SLEW_SPEED_FREQ  100
 
 #define NORTH_DEC_SEC     324000L // 90°

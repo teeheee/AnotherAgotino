@@ -62,6 +62,7 @@ String lx200DEC = "+90*00:00#";
 String _aGotino = "AGT";
 
 String currentDate = "01/01/2022";
+String currentTime = "01:00:00";
 String currentLocation = "Ulm";
 
 const unsigned long _ver = 050722;
@@ -140,6 +141,13 @@ void lx200(String s) { // all :.*# commands are passed here
     Serial.print('#');
   } else if (s.substring(1,3).equals("GT")) {  
     Serial.print('60.0#');
+  } else if (s.substring(1,3).equals("Gt")) {  
+    Serial.print('+48*24#');
+  } else if (s.substring(1,3).equals("GG")) {  
+    Serial.print(currentTime);  
+    Serial.print('#');
+  } else if (s.substring(1,3).equals("GL")) {  
+    Serial.print('+02#');
   } else if (s.substring(1,3).equals("SC")) { 
     int end = s.indexOf('#');
     currentDate = s.substring(3,end);

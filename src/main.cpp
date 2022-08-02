@@ -116,6 +116,17 @@ void updateLx200Coords() {
  *  Basic Meade LX200 protocol
  */
 void lx200(String s) { // all :.*# commands are passed here 
+  if (s.charAt(2) == 'D')
+  {
+    if(timer_slew_is_active())
+    {
+      Serial.print("\x7f#");
+    }
+    else
+    {
+      Serial.print("#");
+    }
+  }
   if (s.substring(1,3).equals("GR")) { // :GR# 
     printLog("GR");
     // send current RA to computer

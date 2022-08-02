@@ -51,6 +51,7 @@ void TimerHandler()
 float ra_freq = 0;
 float dec_freq = 0;
 
+uint8_t slew_is_active_flag = 0;
 
 #define PRINT_VAR(XX)  {Serial.print(#XX": ");Serial.println(XX);}
 
@@ -74,6 +75,7 @@ void timer_handle_reset_stepper()
     timer_set_interval_dec(0);
     ISR_Timer_Object.deleteTimer(timer_handle_timeout);
     timer_handle_timeout = -1;
+    slew_is_active_flag = 0;
 }
 
 void timer_handle_ra_callback()
@@ -165,4 +167,11 @@ void timer_reset_stepper_after_ms(long ms)
     ISR_Timer_Object.deleteTimer(timer_handle_timeout);
     timer_handle_timeout = ISR_Timer_Object.setInterval(ms, timer_handle_reset_stepper);
   }
+  slew_is_active_flag = 1;
+}
+
+
+uint8_t timer_slew_is_active()
+{
+    return slew_is_active_flag;
 }

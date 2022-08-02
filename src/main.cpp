@@ -157,12 +157,18 @@ void lx200(String s) { // all :.*# commands are passed here
     Serial.print('60.0#');
   } else if (s.substring(1,3).equals("Gt")) {  
     Serial.print('+48*24#');
+  } else if (s.substring(1,3).equals("Gg")) {  
+    Serial.print('-009*58#');
   } else if (s.substring(1,3).equals("GG")) {  
-    Serial.print(currentTime);  
-    Serial.print('#');
-  } else if (s.substring(1,3).equals("GL")) {  
     Serial.print(currentUTCOffset);
     Serial.print('#');
+  } else if (s.substring(1,3).equals("GL")) {  
+    Serial.print(currentTime);  
+    Serial.print('#');
+  } else if (s.substring(1,3).equals("SL")) { 
+    int end = s.indexOf('#');
+    currentTime = s.substring(3,end);
+    Serial.print(1);
   } else if (s.substring(1,3).equals("SC")) { 
     int end = s.indexOf('#');
     currentDate = s.substring(3,end);

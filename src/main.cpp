@@ -133,6 +133,8 @@ void lx200(String s) { // all :.*# commands are passed here
        Serial.print(_ver);  
     }
     Serial.print('#');
+  } else if (s.substring(1,3).equals("Gc")) {  
+    Serial.print('24#');
   } else if (s.substring(1,3).equals("GC")) { 
     Serial.print(currentDate);  
     Serial.print('#');

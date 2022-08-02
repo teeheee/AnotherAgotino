@@ -35,7 +35,8 @@ Many thanks to mappite for the aGotino Project
 * :GT# -> TT.T# //Get Tracking Rate 60Hz=Sideral Rate
 * :Gt# -> sDD*MM# //Get Current Site Latitdue
 * :GG# -> sHH# //Get UTC offset time
-* :GL# -> HH:MM:SS# //Get Local Time in 24 hour format 
+* :GL# -> HH:MM:SS# //Get Local Time in 24 hour format
+* :Gc# -> 24# //time format 
 
 # Command TODO ?
 * :SG -02#:

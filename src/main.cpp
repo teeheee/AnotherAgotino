@@ -312,13 +312,13 @@ void loop() {
     // discard blanks. Meade LX200 specs states :Sd and :Sr are
     // not followed by a blank but some implementation does include it.
     // also this allows aGoto commands to be typed with blanks
-    if (input[in] == " ") return; 
+    if (input[in] == ' ') return; 
     
     // acknowledge LX200 ACK signal (char(6)) for software that tries to autodetect protocol (i.e. Stellarium Plus)
     if (input[in] == char(6)) { Serial.print("P"); return; } // P = Polar
 
-    if (input[in] == "#" || input[in] == "\n") { // after a # or a \n it is time to check what is in the buffer
-      if (input[0] == ":") { // it"s lx200 protocol
+    if (input[in] == '#' || input[in] == '\n') { // after a # or a \n it is time to check what is in the buffer
+      if (input[0] == ':') { // it"s lx200 protocol
         printLog(input);
         lx200(input);
       } else {

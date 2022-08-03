@@ -91,23 +91,23 @@ void updateLx200Coords() {
   unsigned long mi = (raSecs/60)%60;
   unsigned long ss = raSecs%60;
   lx200RA = "";
-  if (pp<10) lx200RA.concat('0');
-  lx200RA.concat(pp);lx200RA.concat(':');
-  if (mi<10) lx200RA.concat('0');
-  lx200RA.concat(mi);lx200RA.concat(':');
-  if (ss<10) lx200RA.concat('0');
-  lx200RA.concat(ss);lx200RA.concat('#');
+  if (pp<10) lx200RA.concat("0");
+  lx200RA.concat(pp);lx200RA.concat(":");
+  if (mi<10) lx200RA.concat("0");
+  lx200RA.concat(mi);lx200RA.concat(":");
+  if (ss<10) lx200RA.concat("0");
+  lx200RA.concat(ss);lx200RA.concat("#");
   pp = labs(decSecs)/3600; //TODO this division looses data
   mi = (labs(decSecs)-pp*3600)/60;
   ss = (labs(decSecs)-mi*60-pp*3600);
   lx200DEC = "";
-  lx200DEC.concat(decSecs>0?'+':'-');
-  if (pp<10) lx200DEC.concat('0');
+  lx200DEC.concat(decSecs>0?"+":"-");
+  if (pp<10) lx200DEC.concat("0");
   lx200DEC.concat(pp);lx200DEC.concat("*"); // FIXME: may be just * nowadays
-  if (mi<10) lx200DEC.concat('0'); 
-  lx200DEC.concat(mi);lx200DEC.concat(':');
-  if (ss<10) lx200DEC.concat('0');
-  lx200DEC.concat(ss);lx200DEC.concat('#');
+  if (mi<10) lx200DEC.concat("0"); 
+  lx200DEC.concat(mi);lx200DEC.concat(":");
+  if (ss<10) lx200DEC.concat("0");
+  lx200DEC.concat(ss);lx200DEC.concat("#");
 } 
 
 
@@ -139,46 +139,46 @@ void lx200(String s) { // all :.*# commands are passed here
     Serial.print(lx200DEC);
   } else if (s.substring(1,3).equals("GV")) { // :GV*# Get Version *
     char c = s.charAt(3); 
-    if ( c == 'P') {// GVP - Product name
+    if ( c == "P") {// GVP - Product name
        Serial.print(_aGotino);  
-    } else if (c == 'N') { // GVN - firmware version
+    } else if (c == "N") { // GVN - firmware version
        Serial.print(_ver);  
     }
-    Serial.print('#');
+    Serial.print("#");
   } else if (s.substring(1,3).equals("Gc")) {  
-    Serial.print('24#');
+    Serial.print("24#");
   } else if (s.substring(1,3).equals("GC")) { 
     Serial.print(currentDate);  
-    Serial.print('#');
+    Serial.print("#");
   } else if (s.substring(1,3).equals("GM")) { 
     Serial.print(currentLocation);  
-    Serial.print('#');
+    Serial.print("#");
   } else if (s.substring(1,3).equals("GT")) {  
-    Serial.print('60.0#');
+    Serial.print("60.0#");
   } else if (s.substring(1,3).equals("Gt")) {  
-    Serial.print('+48*24#');
+    Serial.print("+48*24#");
   } else if (s.substring(1,3).equals("Gg")) {  
-    Serial.print('-009*58#');
+    Serial.print("-009*58#");
   } else if (s.substring(1,3).equals("GG")) {  
     Serial.print(currentUTCOffset);
-    Serial.print('#');
+    Serial.print("#");
   } else if (s.substring(1,3).equals("GL")) {  
     Serial.print(currentTime);  
-    Serial.print('#');
+    Serial.print("#");
   } else if (s.substring(1,3).equals("SL")) { 
-    int end = s.indexOf('#');
+    int end = s.indexOf("#");
     currentTime = s.substring(3,end);
     Serial.print(1);
   } else if (s.substring(1,3).equals("SC")) { 
-    int end = s.indexOf('#');
+    int end = s.indexOf("#");
     currentDate = s.substring(3,end);
     Serial.print(1);
   } else if (s.substring(1,3).equals("SG")) { 
-    int end = s.indexOf('#');
+    int end = s.indexOf("#");
     currentUTCOffset = s.substring(3,end);
     Serial.print(1);
   } else if (s.substring(1,3).equals("SM")) { 
-    int end = s.indexOf('#');
+    int end = s.indexOf("#");
     currentLocation = s.substring(3,end);
     Serial.print(1);
   } else if (s.substring(1,3).equals("Sr")) { // :SrHH:MM:SS# or :SrHH:MM.T# // no blanks after :Sr as per Meade specs
@@ -201,13 +201,13 @@ void lx200(String s) { // all :.*# commands are passed here
     long mi = s.substring(7,9).toInt();
     long ss = 0;
     if (s.charAt(9) == ':') { ss = s.substring(10,12).toInt(); }
-    inDEC = (dd*3600+mi*60+ss)*(s.charAt(3)=='-'?-1:1);
+    inDEC = (dd*3600+mi*60+ss)*(s.charAt(3)=="-"?-1:1);
     Serial.print(1); // FIXME: input is not validated
   } else if (s.charAt(1) == 'M') { // MOVE:  :MS# (slew), :Mx# (slow move)
     if (s.charAt(2) == 'S' ) { // SLEW
       printLog("MS");
       // assumes Sr and Sd have been processed hence
-      // inRA and inDEC have been set, now it's time to move
+      // inRA and inDEC have been set, now it"s time to move
       long deltaRaSecs  = currRA-inRA;
       if(deltaRaSecs > DAY_SECONDS/2)
       {
@@ -312,19 +312,19 @@ void loop() {
     // discard blanks. Meade LX200 specs states :Sd and :Sr are
     // not followed by a blank but some implementation does include it.
     // also this allows aGoto commands to be typed with blanks
-    if (input[in] == ' ') return; 
+    if (input[in] == " ") return; 
     
     // acknowledge LX200 ACK signal (char(6)) for software that tries to autodetect protocol (i.e. Stellarium Plus)
     if (input[in] == char(6)) { Serial.print("P"); return; } // P = Polar
 
-    if (input[in] == '#' || input[in] == '\n') { // after a # or a \n it is time to check what is in the buffer
-      if (input[0] == ':') { // it's lx200 protocol
+    if (input[in] == "#" || input[in] == "\n") { // after a # or a \n it is time to check what is in the buffer
+      if (input[0] == ":") { // it"s lx200 protocol
         printLog(input);
         lx200(input);
       } else {
         // unknown command, print message only
         // if buffer contains more than one char
-        // since stellarium seems to send extra #'s
+        // since stellarium seems to send extra #"s
         if (in > 0) {
           String s = input;
           Serial.print(s.substring(0,in));

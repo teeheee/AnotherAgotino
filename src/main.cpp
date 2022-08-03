@@ -116,7 +116,7 @@ void updateLx200Coords() {
  *  Basic Meade LX200 protocol
  */
 void lx200(String s) { // all :.*# commands are passed here 
-  if (s.charAt(2) == 'D')
+  if (s.charAt(1) == 'D')
   {
     if(timer_slew_is_active())
     {

@@ -45,7 +45,7 @@
 #define MICROSTEPS_DEC_DIV      (MICROSTEPS_DEC/MICROSTEPS_DEC_FAST)
 
 #define MICROSTEPS_PER_DEGREE_RA ((WORM_RATIO_RA*RA_GEAR_HIGH*STEPS_PER_REV*MICROSTEPS_RA)/(RA_GEAR_LOW*360.0))
-#define MICROSTEPS_PER_DEGREE_DEC ((WORM_RATIO_RA*DEC_GEAR_HIGH*STEPS_PER_REV*MICROSTEPS_DEC)/(DEC_GEAR_LOW*360.0))
+#define MICROSTEPS_PER_DEGREE_DEC ((WORM_RATIO_DEC*DEC_GEAR_HIGH*STEPS_PER_REV*MICROSTEPS_DEC)/(DEC_GEAR_LOW*360.0))
 
 
 #define ROUND(x) ((x)+0.5)
@@ -53,7 +53,7 @@
 #define FREQ_RA_1_HZ ((1000.0*MICROSTEPS_PER_DEGREE_RA*360.0)/(MS_PER_DAY_SIDERAL))
 #define FREQ_DEC_1_HZ ((1000.0*MICROSTEPS_PER_DEGREE_DEC*360.0)/(MS_PER_DAY_SIDERAL))
 
-#define GUIDE_SPEED_FREQ 4 //133 //see https://www.indilib.org/about/ekos/guide-module.html#h4-guiding for proportional gain
+#define GUIDE_SPEED_FREQ 1 //133 //see https://www.indilib.org/about/ekos/guide-module.html#h4-guiding for proportional gain
 #define SLEW_SPEED_FREQ  100
 
 #define NORTH_DEC_SEC     324000L // 90°

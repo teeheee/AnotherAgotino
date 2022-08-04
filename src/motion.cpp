@@ -110,7 +110,7 @@ void move_ra_ms(long ms)
 
 void start_move_ra(int dir)
 {
-    stepper_set_dec_micro_stepping(MICROSTEPS_DEC_FAST);
+    stepper_set_ra_micro_stepping(MICROSTEPS_RA_FAST);
     timer_set_interval_ra(FREQ_DEC_1_HZ*SLEW_SPEED_FREQ);
     stepper_ra_set_dir(dir);
 }

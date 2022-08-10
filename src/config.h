@@ -30,7 +30,7 @@
 #define DEC_GEAR_HIGH       80.0
 #define DEC_GEAR_LOW        20.0
 
-#define  RA_GEAR_HIGH         48.0
+#define  RA_GEAR_HIGH         80.0
 #define  RA_GEAR_LOW          20.0
 
 #define  STEPS_PER_REV     200.0
@@ -51,7 +51,7 @@
 #define ROUND(x) ((x)+0.5)
 
 #define FREQ_RA_1_HZ ((1000.0*MICROSTEPS_PER_DEGREE_RA*360.0)/(MS_PER_DAY_SIDERAL))
-#define FREQ_DEC_1_HZ ((1000.0*MICROSTEPS_PER_DEGREE_DEC*360.0)/(MS_PER_DAY_SIDERAL))
+#define FREQ_DEC_1_HZ ((1000.0*MICROSTEPS_PER_DEGREE_DEC*360.0)/(MS_PER_360_DEG))
 
 #define GUIDE_SPEED_FREQ 1 //133 //see https://www.indilib.org/about/ekos/guide-module.html#h4-guiding for proportional gain
 #define SLEW_SPEED_FREQ  100

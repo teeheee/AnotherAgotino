@@ -228,31 +228,31 @@ void lx200(String s) { // all :.*# commands are passed here
       int ms = 500;
       ms = s.substring(4,8).toInt();
       switch (s.charAt(3)) {
-          case 'n':
+          case 'e':
             move_ra_ms(-ms);
             break;
-          case 's':
+          case 'w':
             move_ra_ms(ms);
             break;
-          case 'w':
+          case 'n':
             move_dec_ms(ms);
             break;
-          case 'e':
+          case 's':
             move_dec_ms(-ms);
             break;
         } // default is ignored;
     }else  {
       switch (s.charAt(2)) {
-          case 'n':
+          case 'e':
             start_move_ra(-1);
             break;
-          case 's':
+          case 'w':
             start_move_ra(1);
             break;
-          case 'w':
+          case 'n':
             start_move_dec(1);
             break;
-          case 'e':
+          case 's':
             start_move_dec(-1);
             break;
         } // default is ignored;

@@ -58,7 +58,7 @@ void motion_track(){
   stepper_dec_set_dir(1);
   stepper_ra_set_dir(1);
   stepper_set_ra_micro_stepping(MICROSTEPS_RA);
-  stepper_set_ra_micro_stepping(MICROSTEPS_DEC);
+  stepper_set_dec_micro_stepping(MICROSTEPS_DEC);
 }
 
 void motion_halt(){

@@ -84,12 +84,12 @@ void move_ra_ms(long ms)
 {
     if(ms > 0)
     {
-      timer_set_interval_ra(FREQ_DEC_1_HZ+FREQ_DEC_1_HZ*GUIDE_SPEED_FREQ);
+      timer_set_interval_ra(FREQ_RA_1_HZ+FREQ_RA_1_HZ*GUIDE_SPEED_FREQ);
       stepper_ra_set_dir(1);
     }
     else
     {
-      float freq = FREQ_DEC_1_HZ - FREQ_DEC_1_HZ*GUIDE_SPEED_FREQ;
+      float freq = FREQ_RA_1_HZ - FREQ_RA_1_HZ*GUIDE_SPEED_FREQ;
       if(freq < 0)
       {
         timer_set_interval_ra(fabs(freq));
@@ -111,7 +111,7 @@ void move_ra_ms(long ms)
 void start_move_ra(int dir)
 {
     stepper_set_ra_micro_stepping(MICROSTEPS_RA_FAST);
-    timer_set_interval_ra(FREQ_DEC_1_HZ*SLEW_SPEED_FREQ);
+    timer_set_interval_ra(FREQ_RA_1_HZ*SLEW_SPEED_FREQ);
     stepper_ra_set_dir(dir);
 }
 

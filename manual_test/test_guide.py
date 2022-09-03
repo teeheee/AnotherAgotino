@@ -1,10 +1,6 @@
 import serial
 import time
-from astropy import units as u
-from astropy.coordinates import SkyCoord
 ser = serial.Serial('COM9',9600)  # open serial port
-
-c_model = SkyCoord(ra=0*u.degree, dec=90*u.degree, frame='icrs')
 
 def init():
     print(ser.read_until(expected=b"ready"))
